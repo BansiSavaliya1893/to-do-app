@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Bitter", sans-serif;
+  box-sizing: border-box;
+  color: #18230f;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #332d56, #4e6688, #9a9aa6);
+}
+
+.container {
+  background-color: #f1f1f1;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #cbcaca;
+  width: 90%;
+  max-width: 800px;
+}
+
+.input-container h3 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.input-task {
+  padding: 10px;
+  margin: 10px 0px;
+  width: 100%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.add-btn {
+  padding: 10px 16px;
+  display: block;
+  margin: 20px auto;
+  background-color: #4e6688;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+  color: green;
+  margin: 0px 8px;
+}
+
+.delete-btn {
+  color: rgb(230, 55, 55);
+  margin: 0px 8px;
+}
+
+.add-btn:hover {
+  background-color: #332d56;
+}
+
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.task-table th,
+.task-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.task-table th {
+  background-color: #4e6688;
+  color: white;
+}
+
+.task-table td i {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
