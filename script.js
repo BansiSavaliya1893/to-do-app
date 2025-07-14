@@ -7,9 +7,30 @@ const todoList = document.getElementById('todoList');
 let isEditing = false;
 let taskBeingEdited = null;
 
-const getTasksFromStorage = () => JSON.parse(localStorage.getItem("tasks")) || [];
+const getTasksFromStorage = () => {
+    try {
+        const stored = localStorage.getItem("tasks");
+        return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+        console.error("Error loading tasks from localStorage:", error);
+        return [];
+    }
+};
 
-const saveTasksToStorage = (tasks) => localStorage.setItem("tasks", JSON.stringify(tasks));
+const saveTasksToStorage = (tasks) => {
+    console.log("=== SAVING TASKS ===");
+    console.log("Tasks to save:", tasks);
+    console.log("Number of tasks:", tasks.length);
+    
+    try {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        console.log("Tasks successfully saved to localStorage");
+        console.log("localStorage content after save:", localStorage.getItem("tasks"));
+    } catch (error) {
+        console.error("Error saving tasks to localStorage:", error);
+    }
+    console.log("=== SAVING COMPLETE ===");
+};
 
 const toggleTaskCompletion = (taskToToggle, isCompleted) => {
     const tasks = getTasksFromStorage();
@@ -104,9 +125,23 @@ const renderTask = (task) => {
 };
 
 const loadTasks = () => {
+    console.log("=== LOADING TASKS ===");
     todoList.innerHTML = "";
     const tasks = getTasksFromStorage();
-    tasks.forEach(renderTask);
+    console.log("Tasks loaded from localStorage:", tasks);
+    console.log("Number of tasks:", tasks.length);
+    console.log("localStorage content:", localStorage.getItem("tasks"));
+    
+    if (tasks && tasks.length > 0) {
+        console.log("Rendering", tasks.length, "tasks...");
+        tasks.forEach((task, index) => {
+            console.log(`Rendering task ${index + 1}:`, task);
+            renderTask(task);
+        });
+    } else {
+        console.log("No tasks found or empty array");
+    }
+    console.log("=== LOADING COMPLETE ===");
 };
 
 window.addEventListener("DOMContentLoaded", loadTasks);
@@ -155,9 +190,38 @@ const addTask = () => {
         renderTask(task);
     }
 
+    // Clear form inputs
     inputBoxTitle.value = "";
     inputBoxDes.value = "";
     inputBoxPrio.selectedIndex = 0;
 };
 
 addbtn.addEventListener('click', addTask);
+
+// Debug function to check localStorage
+const debugLocalStorage = () => {
+    console.log("Current localStorage tasks:", getTasksFromStorage());
+    console.log("localStorage keys:", Object.keys(localStorage));
+};
+
+// Test localStorage functionality
+const testLocalStorage = () => {
+    console.log("Testing localStorage...");
+    const testData = [{ title: "Test Task", description: "Test Description", priority: "High", completed: false }];
+    localStorage.setItem("test", JSON.stringify(testData));
+    const retrieved = JSON.parse(localStorage.getItem("test"));
+    console.log("Test data saved and retrieved:", retrieved);
+    localStorage.removeItem("test");
+    console.log("localStorage test completed successfully!");
+};
+
+// Manual load function for testing
+const manualLoadTasks = () => {
+    console.log("=== MANUAL LOAD TRIGGERED ===");
+    loadTasks();
+};
+
+// Add debug functions to window for testing
+window.debugLocalStorage = debugLocalStorage;
+window.testLocalStorage = testLocalStorage;
+window.manualLoadTasks = manualLoadTasks;
