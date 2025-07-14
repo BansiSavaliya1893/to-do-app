@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function TodoForm({ onAddTask, isEditing, taskBeingEdited }) {
+function TodoForm({ onAddTask, isEditing, taskBeingEdited, onCancelEdit }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('');
@@ -41,6 +41,13 @@ function TodoForm({ onAddTask, isEditing, taskBeingEdited }) {
     }
   };
 
+  const handleCancel = () => {
+    setTitle('');
+    setDescription('');
+    setPriority('');
+    onCancelEdit();
+  };
+
   return (
     <div className="input-container">
       <h3>My To-Do List</h3>
@@ -71,13 +78,24 @@ function TodoForm({ onAddTask, isEditing, taskBeingEdited }) {
           <option value="Medium">Medium</option>
           <option value="High">High</option>
         </select>
-        <button
-          type="submit"
-          className="add-btn"
-          style={{ backgroundColor: isEditing ? '#f57c00' : '#4e6688' }}
-        >
-          {isEditing ? 'Update Task' : 'Add Task'}
-        </button>
+        <div className="form-buttons">
+          <button
+            type="submit"
+            className="add-btn"
+            style={{ backgroundColor: isEditing ? '#f57c00' : '#4e6688' }}
+          >
+            {isEditing ? 'Update Task' : 'Add Task'}
+          </button>
+          {isEditing && (
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="cancel-btn"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
